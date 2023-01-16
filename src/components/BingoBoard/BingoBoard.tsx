@@ -108,8 +108,6 @@ export const BingoBoard = () => {
     const newBingoGrid = generateBingoCards(BingoCards);
     setBingoGrid(newBingoGrid);
     setWinCells({});
-    _setIsDiagonal1Bingo(false);
-    _setIsDiagonal2Bingo(false);
     setBingoCount(0);
   };
 
