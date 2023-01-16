@@ -1,6 +1,5 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, Grid, Paper, Typography, Button } from "@mui/material";
-import useBingoCards from "../../hooks/useBingoCards";
 import { generateBingoCards } from "../../utils";
 import BingoCards from "../../constants/bingoCards.json";
 import Cell from "../Cell";
@@ -14,17 +13,15 @@ import {
   isDiagonal2Bingo,
 } from "../../utils";
 
+const initialCards = generateBingoCards(BingoCards);
+
 export const BingoBoard = () => {
-  const [bingoGrid, setBingoGrid] = useState<Cell[][]>(generateBingoCards(BingoCards));
+  const [bingoGrid, setBingoGrid] = useState<Cell[][]>([]);
   const [bingoCount, setBingoCount] = useState<number>(0);
   const [winCells, setWinCells] = useState<{ [key: string]: boolean }>({});
   const [hasWon, setHasWon] = useState<boolean>(false);
-  const [_isDiagonal1Bingo, _setIsDiagonal1Bingo] =
-    React.useState<boolean>(false);
-  const [_isDiagonal2Bingo, _setIsDiagonal2Bingo] =
-    React.useState<boolean>(false);
-
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [_isDiagonal1Bingo, _setIsDiagonal1Bingo] = useState<boolean>(false);
+  const [_isDiagonal2Bingo, _setIsDiagonal2Bingo] = useState<boolean>(false);
   const openCelebration = () => setHasWon(true);
   const closeCelebration = () => setHasWon(false);
 
@@ -113,6 +110,10 @@ export const BingoBoard = () => {
     setWinCells({});
     setBingoCount(0);
   };
+
+  useEffect(() => {
+    setBingoGrid(generateBingoCards(BingoCards));
+  }, []);
 
   return (
     <div>

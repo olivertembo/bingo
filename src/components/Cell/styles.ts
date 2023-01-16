@@ -4,6 +4,8 @@ export const cell: SxProps<Theme> = (theme) => ({
   display: "flex",
   width: "100%",
   height: "100%",
+  textTransform: "inherit",
+  whiteSpace: "initial",
   margin: "0",
   padding: "0",
   justifyContent: "center",
