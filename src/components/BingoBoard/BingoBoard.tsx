@@ -1,5 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Box, Grid, Paper, Typography, Button } from "@mui/material";
+import useBingoCards from "../../hooks/useBingoCards";
+import { generateBingoCards } from "../../utils";
+import BingoCards from "../../constants/bingoCards.json";
 import Cell from "../Cell";
 import Menu from "../Menu";
 import Celebration from "../Celebration";
@@ -11,46 +14,8 @@ import {
   isDiagonal2Bingo,
 } from "../../utils";
 
-const initialBingoGrid: Cell[][] = [
-  [
-    { text: "A1", isBingo: false },
-    { text: "B1", isBingo: false },
-    { text: "C1", isBingo: false },
-    { text: "D1", isBingo: false },
-    { text: "E1", isBingo: false },
-  ],
-  [
-    { text: "A2", isBingo: false },
-    { text: "B2", isBingo: false },
-    { text: "C2", isBingo: false },
-    { text: "D2", isBingo: false },
-    { text: "E2", isBingo: false },
-  ],
-  [
-    { text: "A3", isBingo: false },
-    { text: "B3", isBingo: false },
-    { text: "Bingo", isBingo: true },
-    { text: "E3", isBingo: false },
-    { text: "13", isBingo: false },
-  ],
-  [
-    { text: "A4", isBingo: false },
-    { text: "B4", isBingo: false },
-    { text: "C4", isBingo: false },
-    { text: "D4", isBingo: false },
-    { text: "E4", isBingo: false },
-  ],
-  [
-    { text: "A5", isBingo: false },
-    { text: "B5", isBingo: false },
-    { text: "C5", isBingo: false },
-    { text: "D5", isBingo: false },
-    { text: "E5", isBingo: false },
-  ],
-];
-
 export const BingoBoard = () => {
-  const [bingoGrid, setBingoGrid] = useState<Cell[][]>([...initialBingoGrid]);
+  const [bingoGrid, setBingoGrid] = useState<Cell[][]>(generateBingoCards(BingoCards));
   const [bingoCount, setBingoCount] = useState<number>(0);
   const [winCells, setWinCells] = useState<{ [key: string]: boolean }>({});
   const [hasWon, setHasWon] = useState<boolean>(false);
@@ -143,12 +108,7 @@ export const BingoBoard = () => {
   };
 
   const handleReset = () => {
-    const newBingoGrid = initialBingoGrid.map((row) =>
-      row.map((cell) => {
-        if (cell.text === "Bingo") return { ...cell, isBingo: true };
-        return { ...cell, isBingo: false };
-      })
-    );
+    const newBingoGrid = generateBingoCards(BingoCards);
     setBingoGrid(newBingoGrid);
     setWinCells({});
     setBingoCount(0);
