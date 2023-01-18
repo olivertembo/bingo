@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography, Button } from "@mui/material";
+import { Box, Grid, Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Cell from "../Cell";
 import Menu from "../Menu";
 import Celebration from "../Celebration";
@@ -26,35 +26,27 @@ export const BingoBoard = () => {
         handleOpen={openCelebration}
       />
       <Box sx={styles.container}>
-        <Grid
-          sx={styles.bingoGrid}
-          columns={5}
-          spacing={0}
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          wrap="wrap"
-        >
-          {bingoGrid.map((row, rowIndex) =>
-            row.map((cell, cellIndex) => (
-              <Grid
-                key={`${rowIndex}-${cellIndex}`}
-                sx={styles.gridCell}
-                xs={1}
-                item
-              >
+        <TableContainer sx={styles.bingoGrid} component={Paper}>
+          <Table sx={{ minWidth: 200 }} aria-label="bingo table">
+          <TableBody>
+            {bingoGrid.map((rows, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {rows.map((cell, cellIndex) => (
                 <Cell
+                  key={`${rowIndex}-${cellIndex}`}
                   handleSelection={handleSelection}
                   cell={cell}
                   rowIndex={rowIndex}
                   cellIndex={cellIndex}
                   isWinningCell={winCells[`${rowIndex}-${cellIndex}`]}
                 />
-              </Grid>
-            ))
-          )}
-        </Grid>
+                ))}
+              </TableRow>
+            ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
         <Typography variant="h1" sx={styles.title}>
           Bingo
         </Typography>

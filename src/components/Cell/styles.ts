@@ -1,19 +1,11 @@
 import { SxProps, Theme } from '@mui/system';
 
-export const cell: SxProps<Theme> = (theme) => ({
-  display: "flex",
-  width: "100%",
-  height: "100%",
-  textTransform: "inherit",
-  whiteSpace: "initial",
-  margin: "0",
-  padding: "0",
-  justifyContent: "center",
-  minHeight: { xs: '35px', sm: '75px', md: '100px', lg: '100px', xl: '100px' },
-  minWidth: { xs: '35px', sm: '75px', md: '100px', lg: '100px', xl: '100px' },
-  backgroundColor: theme.palette.common.white,
-  color: "#000",
-  fontWeight: 500,
+export const tableCell: SxProps<Theme> = (theme) => ({
+  border: '1px solid #000',
+  padding: '0',
+  width: '20%',
+  height: { xs: '65px', sm: '100px', md: '100px' },
+  fontSize: { xs: '0.5rem', sm: '1rem',  },
   cursor: "pointer",
   '&:hover': {
     backgroundColor: theme.palette.primary.main,

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { TableCell } from "@mui/material";
 import * as styles from "./styles";
 
 interface CellProps {
@@ -12,16 +12,16 @@ export const Cell = (props: CellProps) => {
   const { cell, rowIndex, cellIndex, isWinningCell, handleSelection } = props;
 
   return (
-    <Button
+    <TableCell
+      align="center"
       color="primary"
-      disabled={cell.isBingo}
       className={`${cell.isBingo ? "selected" : ""} ${
         isWinningCell ? "winning-cell" : ""
       }`}
-      sx={styles.cell}
+      sx={styles.tableCell}
       onClick={() => handleSelection(rowIndex, cellIndex)}
     >
       {cell.text}
-    </Button>
+    </TableCell>
   );
 }

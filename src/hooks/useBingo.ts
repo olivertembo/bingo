@@ -22,6 +22,8 @@ export const useBingo = () => {
     const newBingoGrid = [...bingoGrid];
     const cell = newBingoGrid[rowIndex][cellIndex];
 
+    if(cell.isBingo) return;
+
     newBingoGrid[rowIndex][cellIndex] = {
       ...cell,
       isBingo: true,
