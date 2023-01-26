@@ -7,11 +7,15 @@ export const tableCell: SxProps<Theme> = (theme) => ({
   height: { xs: '65px', sm: '100px', md: '100px' },
   fontSize: { xs: '0.5rem', sm: '1rem',  },
   cursor: "pointer",
+  '&:active': {
+    transform: 'scale(0.95)'
+  },
   '&:hover': {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText
   },
   "&.selected": {
+    transform: 'unset',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText
   },
