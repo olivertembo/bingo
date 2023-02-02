@@ -42,27 +42,34 @@ export const useBingo = () => {
     rowIndex: number,
     cellIndex: number
   ) => {
+    let _bingoCount = 0;
+
     const row = bingoGrid[rowIndex];
     const column = cellIndex;
 
     const checkISRowBingo = isRowBingo(row);
 
-    if (checkISRowBingo) {
-      const winningCells = row.reduce((acc, cell, index) => {
+    if(checkISRowBingo) {
+      _bingoCount++;
+
+      if(bingoCount > 2) return true;
+
+      let winningCells = row.reduce((acc, cell, index) => {
         acc[`${rowIndex}-${index}`] = true;
         return acc;
       }, {} as { [key: string]: boolean });
-
+  
       setWinCells((prevWinCells) => ({
         ...prevWinCells,
         ...winningCells,
       }));
-
-      return true;
     }
 
     const checkIsColumnBingo = isColumnBingo(bingoGrid, column);
-    if (checkIsColumnBingo) {
+    if(checkIsColumnBingo) {
+      _bingoCount++;
+      if(bingoCount >= 2) return true;
+
       const winningCells = bingoGrid.reduce((acc, row, index) => {
         acc[`${index}-${column}`] = true;
         return acc;
@@ -71,13 +78,17 @@ export const useBingo = () => {
         ...prevWinCells,
         ...winningCells,
       }));
-
-      return true;
     }
 
+
+
+    
     if (!_isDiagonal1Bingo) {
       const checkIsDiagonal1Bingo = isDiagonal1Bingo(bingoGrid);
       if (checkIsDiagonal1Bingo) {
+        _bingoCount++;
+        if (bingoCount >= 2) return true;
+
         const winningCells = bingoGrid.reduce((acc, row, index) => {
           acc[`${index}-${index}`] = true;
           return acc;
@@ -87,14 +98,14 @@ export const useBingo = () => {
           ...winningCells,
         }));
         _setIsDiagonal1Bingo(true);
-
-        return true;
       }
     }
 
     if (!_isDiagonal2Bingo) {
       const checkIsDiagonal2Bingo = isDiagonal2Bingo(bingoGrid);
       if (checkIsDiagonal2Bingo) {
+        _bingoCount++;
+        if (bingoCount >= 2) return true;
         const winningCells = bingoGrid.reduce((acc, row, index) => {
           acc[`${index}-${bingoGrid.length - index - 1}`] = true;
           return acc;
@@ -104,10 +115,10 @@ export const useBingo = () => {
           ...winningCells,
         }));
         _setIsDiagonal2Bingo(true);
-
-        return true;
       }
     }
+
+    setBingoCount((prevBingoCount) => prevBingoCount + _bingoCount);
 
     return false;
   };
