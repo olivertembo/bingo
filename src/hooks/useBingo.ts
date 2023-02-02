@@ -8,9 +8,9 @@ import {
   isDiagonal1Bingo,
   isDiagonal2Bingo,
 } from "../utils";
-import winAudio from "../audio/win-notification.wav";
-import selectAudio from "../audio/mixkit-select-click-1109.wav";
-import flipAudio from "../audio/mixkit-single-classic-click-1116.wav";
+const winAudioPath = "/audio/win-notification.wav";
+const  selectAudioPath =  "/audio/mixkit-select-click-1109.wav";
+const flipAudioPath = "/audio/mixkit-single-classic-click-1116.wav";
 
 export const useBingo = () => {
   const [bingoGrid, setBingoGrid] = useState<Cell[][]>([]);
@@ -21,9 +21,12 @@ export const useBingo = () => {
   const [_isDiagonal2Bingo, _setIsDiagonal2Bingo] = useState<boolean>(false);
   const openCelebration = () => setHasWon(true);
   const closeCelebration = () => setHasWon(false);
-  const [playWin] = useSound(winAudio);
+  const [playWin] = useSound(winAudioPath);
+  const [playSelect] = useSound(selectAudioPath);
+  const [playFlip] = useSound(flipAudioPath);
 
   const handleSelection = (rowIndex: number, cellIndex: number) => {
+    playSelect();
     const newBingoGrid = [...bingoGrid];
     const cell = newBingoGrid[rowIndex][cellIndex];
 
@@ -69,6 +72,7 @@ export const useBingo = () => {
         ...prevWinCells,
         ...winningCells,
       }));
+      playFlip();
     }
 
     const checkIsColumnBingo = isColumnBingo(bingoGrid, column);
