@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useSound from 'use-sound';
 import { generateBingoCards } from "../utils";
 import BingoCards from "../constants/bingoCards.json";
 import {
@@ -7,6 +8,9 @@ import {
   isDiagonal1Bingo,
   isDiagonal2Bingo,
 } from "../utils";
+import winAudio from "../audio/win-notification.wav";
+import selectAudio from "../audio/mixkit-select-click-1109.wav";
+import flipAudio from "../audio/mixkit-single-classic-click-1116.wav";
 
 export const useBingo = () => {
   const [bingoGrid, setBingoGrid] = useState<Cell[][]>([]);
@@ -17,6 +21,7 @@ export const useBingo = () => {
   const [_isDiagonal2Bingo, _setIsDiagonal2Bingo] = useState<boolean>(false);
   const openCelebration = () => setHasWon(true);
   const closeCelebration = () => setHasWon(false);
+  const [playWin] = useSound(winAudio);
 
   const handleSelection = (rowIndex: number, cellIndex: number) => {
     const newBingoGrid = [...bingoGrid];
@@ -34,6 +39,7 @@ export const useBingo = () => {
     if (isBingo(newBingoGrid, rowIndex, cellIndex)) {
       setBingoCount(bingoCount + 1);
       setHasWon(true);
+      playWin();
     }
   };
 
